@@ -19,3 +19,5 @@ steps:
       - --ingress-settings=internal-only
       - --set-env-vars=CLOUD_TASK_QUEUE_PATH=$_CLOUD_TASK_QUEUE_PATH
 
+options:
+  logging: CLOUD_LOGGING_ONLY
