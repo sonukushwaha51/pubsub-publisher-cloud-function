@@ -4,18 +4,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.cloud.functions.BackgroundFunction;
 import com.google.cloud.functions.Context;
 import com.google.inject.Guice;
-import com.google.inject.Injector;
+import com.google.inject.Inject;
 import com.google.pubsub.v1.PubsubMessage;
 import com.labs.cloud.function.pusub.configuration.ConfigurationModule;
 import com.labs.cloud.function.pusub.event.Event;
+import com.labs.cloud.function.pusub.properties.PropertiesModule;
 
 import java.nio.charset.StandardCharsets;
 
 public class PubsubTriggerCloudFunction implements BackgroundFunction<PubsubMessage> {
 
-    public PubsubTriggerCloudFunction() {
+    private final ObjectMapper objectMapper;
+
+    public PubsubTriggerCloudFunction(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
         Guice.createInjector(
-                new ConfigurationModule()
+                new ConfigurationModule(),
+                new PropertiesModule()
         );
     }
 

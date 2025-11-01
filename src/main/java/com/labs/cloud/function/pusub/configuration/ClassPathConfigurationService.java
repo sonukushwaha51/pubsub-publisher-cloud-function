@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
-public class ClassPathConfigurationService implements ConfigurationService {
+public class ClassPathConfigurationService {
 
     @Provides
     @Singleton
@@ -12,8 +12,4 @@ public class ClassPathConfigurationService implements ConfigurationService {
         return new ObjectMapper();
     }
 
-    @Override
-    public void configure() {
-
-    }
 }
