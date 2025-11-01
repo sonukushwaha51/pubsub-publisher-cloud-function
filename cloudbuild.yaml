@@ -1,0 +1,21 @@
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - functions
+      - deploy
+      - pubsub-trigger-function
+      - --no-gen2
+      - --region=us-central1
+      - --source=.
+      - --entry-point=com.labs.cloud.function.pusub.PubsubTriggerCloudFunction
+      - --max-instances=1
+      - --runtime=java17
+      - --trigger-event=google.pubsub.topic.publish
+      - --trigger-topic=$_TRIGGER_TOPIC
+      - --service-account=$_SERVICE_ACCOUNT
+      - --retry
+      - --memory=128MB
+      - --egress-settings=all
+      - --ingress-settings=internal-only
+      - --set-env-vars=CLOUD_TASK_QUEUE_PATH=$_CLOUD_TASK_QUEUE_PATH
+
