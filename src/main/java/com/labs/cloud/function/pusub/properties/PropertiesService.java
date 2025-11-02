@@ -1,5 +1,6 @@
 package com.labs.cloud.function.pusub.properties;
 
+import com.google.inject.Inject;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -12,16 +13,28 @@ import java.util.Properties;
 @Slf4j
 public class PropertiesService {
 
+    private final Properties properties;
+
+    @Inject
+    public PropertiesService(Properties properties) {
+        this.properties = properties;
+    }
+
     @Provides
     @Named("projectId")
-    public String provideProjectId(Properties properties) {
-        return properties.getProperty("projectId");
+    public String provideProjectId() {
+        return System.getenv("GCP_PROJECT");
+    }
 
+    @Provides
+    @Named("region")
+    public String provideRegion() {
+        return System.getenv("FUNCTION_REGION");
     }
 
     @Provides
     @Named("cloudTaskQueueName")
-    public String getCloudTaskQueueName(Properties properties) {
+    public String getCloudTaskQueueName() {
         return properties.getProperty("cloudTaskQueueName");
     }
 

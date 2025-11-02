@@ -1,0 +1,41 @@
+package com.labs.cloud.function.pusub.schedule;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.cloud.tasks.v2.*;
+import com.google.common.net.MediaType;
+import com.google.inject.Inject;
+import com.google.protobuf.ByteString;
+import com.google.protobuf.Timestamp;
+
+import java.io.IOException;
+
+public class CloudTaskService {
+
+    private final ObjectMapper objectMapper;
+
+    private static final String SCHEDULE_RUNNER_NAME = "pubsub-sched-runner";
+
+    @Inject
+    public CloudTaskService(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    public void createTask(String cloudTaskQueueName, String region, String projectId, Timestamp scheduleTimestamp, String eventPayload) {
+       try (CloudTasksClient cloudTasksClient = CloudTasksClient.create()) {
+           QueueName queueName = QueueName.of(projectId, region, cloudTaskQueueName);
+           String cloudFunctionUrl = "https://"+ region + "-" + projectId + ".cloudfunctions.net/" + SCHEDULE_RUNNER_NAME ;
+           Task task = Task.newBuilder()
+                   .setScheduleTime(scheduleTimestamp)
+                   .setHttpRequest(HttpRequest.newBuilder()
+                           .setBody(ByteString.copyFrom(objectMapper.writeValueAsBytes(eventPayload)))
+                           .setUrl(cloudFunctionUrl)
+                           .setHttpMethod(HttpMethod.POST)
+                           .putHeaders("Content-Type", MediaType.JSON_UTF_8.type())
+                           .build())
+                           .build();
+           cloudTasksClient.createTask(queueName, task);
+       } catch (IOException e) {
+           throw new RuntimeException(e);
+       }
+    }
+}

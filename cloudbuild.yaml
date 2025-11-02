@@ -10,7 +10,6 @@ steps:
       - --entry-point=com.labs.cloud.function.pusub.PubsubTriggerCloudFunction
       - --max-instances=1
       - --runtime=java17
-      - --trigger-event=google.pubsub.topic.publish
       - --trigger-topic=$_TRIGGER_TOPIC
       - --service-account=$_SERVICE_ACCOUNT
       - --retry
