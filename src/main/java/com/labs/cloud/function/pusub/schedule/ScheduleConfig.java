@@ -9,6 +9,6 @@ public class ScheduleConfig {
 
     private String offset;
 
-    private String unit;
+    private String timeUnit;
 
 }

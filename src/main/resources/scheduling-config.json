@@ -2,21 +2,21 @@
   {
     "eventId": "ORDER_PURCHASE",
     "offset": "1",
-    "unit": "HOURS"
+    "timeUnit": "HOURS"
   },
   {
     "eventId": "ORDER_SHIPPED",
     "offset": "1",
-    "unit": "HOURS"
+    "timeUnit": "HOURS"
   },
   {
     "eventId": "ORDER_DELIVERED",
     "offset": "1",
-    "unit": "HOURS"
+    "timeUnit": "HOURS"
   },
   {
     "eventId": "ORDER_REVIEWS",
-    "offset": "1",
-    "unit": "DAYS"
+    "offset": "7",
+    "timeUnit": "DAYS"
   }
 ]

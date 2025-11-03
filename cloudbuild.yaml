@@ -16,7 +16,7 @@ steps:
       - --memory=128MB
       - --egress-settings=all
       - --ingress-settings=internal-only
-      - --set-env-vars=CLOUD_TASK_QUEUE_PATH=$_CLOUD_TASK_QUEUE_PATH
+      - --set-env-vars=CLOUD_TASK_QUEUE_PATH=$_CLOUD_TASK_QUEUE_PATH,CLOUD_TASK_SERVICE_ACCOUNT=$_SERVICE_ACCOUNT
 
 options:
   logging: CLOUD_LOGGING_ONLY

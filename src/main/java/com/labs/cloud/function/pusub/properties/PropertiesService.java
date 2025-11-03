@@ -39,6 +39,12 @@ public class PropertiesService {
     }
 
     @Provides
+    @Named("cloudTaskServiceAccount")
+    public String getCloudTaskServiceAccount() {
+        return System.getenv("CLOUD_TASK_SERVICE_ACCOUNT");
+    }
+
+    @Provides
     @Singleton
     public Properties fetchProperties() {
         Properties properties = new Properties();

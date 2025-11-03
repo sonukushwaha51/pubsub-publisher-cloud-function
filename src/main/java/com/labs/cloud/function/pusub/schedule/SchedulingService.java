@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.Clock;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,11 +81,21 @@ public class SchedulingService {
                 return;
             }
 
-            Timestamp scheduleTimestamp = null;
+            Timestamp scheduleTimestamp = getScheduleTimestamp(scheduleConfig);
             cloudTaskService.createTask(cloudTaskQueueName, region, projectId, scheduleTimestamp, eventPayload);
         } catch (JsonProcessingException exception) {
             throw new RuntimeException(exception);
         }
 
     }
+
+    public Timestamp getScheduleTimestamp(ScheduleConfig scheduleConfig) {
+        ZonedDateTime zonedDateTime = clock.instant().atZone(clock.getZone());
+        String offset = scheduleConfig.getOffset() == null ? "0" : scheduleConfig.getOffset();
+        ChronoUnit chronoUnit = scheduleConfig.getTimeUnit() == null ? ChronoUnit.DAYS : ChronoUnit.valueOf(scheduleConfig.getTimeUnit());
+        long offsetTime = Long.parseLong(offset) + chronoUnit.getDuration().toMillis();
+        long scheduledTime = zonedDateTime.toEpochSecond() + offsetTime;
+        return Timestamp.newBuilder().setSeconds(scheduledTime).build();
+    }
+
 }
