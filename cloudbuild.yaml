@@ -14,6 +14,7 @@ steps:
       - --service-account=$_SERVICE_ACCOUNT
       - --retry
       - --memory=128MB
+      - --vpc-connector=labs-net-1
       - --egress-settings=all
       - --ingress-settings=internal-only
       - --set-env-vars=CLOUD_TASK_QUEUE_PATH=$_CLOUD_TASK_QUEUE_PATH,CLOUD_TASK_SERVICE_ACCOUNT=$_SERVICE_ACCOUNT
