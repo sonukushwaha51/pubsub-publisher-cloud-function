@@ -48,16 +48,15 @@ public class SchedulingService {
         return scheduleConfigMap.get(eventId);
     }
 
-    public void scheduleAndCreateTask(String eventPayload) {
+    public void scheduleAndCreateTask(Event event) {
 
         try {
-            Event event = objectMapper.readValue(eventPayload, Event.class);
             ScheduleConfig scheduleConfig = getScheduleConfig(event.getEventId());
             if (scheduleConfig == null) {
                 log.error("Invalid eventId: {}", event.getEventId());
                 return;
             }
-
+            String eventPayload = objectMapper.writeValueAsString(event);
             Timestamp scheduleTimestamp = getScheduleTimestamp(scheduleConfig);
             cloudTaskService.createTask(cloudTaskQueueName, region, projectId, scheduleTimestamp, eventPayload);
         } catch (JsonProcessingException exception) {
