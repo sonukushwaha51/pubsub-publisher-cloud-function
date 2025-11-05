@@ -1,24 +1,17 @@
 package com.labs.cloud.function.pusub.schedule;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.google.protobuf.Timestamp;
 import com.labs.cloud.function.pusub.event.Event;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.time.Clock;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -36,35 +29,19 @@ public class SchedulingService {
 
     private final CloudTaskService cloudTaskService;
 
-    private final Map<String, ScheduleConfig> scheduleConfigMap = new LinkedHashMap<>();
+    private final Map<String, ScheduleConfig> scheduleConfigMap;
 
     @Inject
     public SchedulingService(ObjectMapper objectMapper,
                              @Named("projectId") String projectId,
                              @Named("region") String region,
-                             @Named("cloudTaskQueueName") String cloudTaskQueueName, CloudTaskService cloudTaskService) {
+                             @Named("cloudTaskQueueName") String cloudTaskQueueName, CloudTaskService cloudTaskService, Map<String, ScheduleConfig> scheduleConfigMap) {
         this.objectMapper = objectMapper;
         this.projectId = projectId;
         this.region = region;
         this.cloudTaskQueueName = cloudTaskQueueName;
         this.cloudTaskService = cloudTaskService;
-    }
-
-
-    @Provides
-    @Singleton
-    public Map<String, ScheduleConfig> mapSchedulingConfig() {
-        TypeReference<List<ScheduleConfig>> typeReference = new TypeReference<List<ScheduleConfig>>() {
-        };
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("scheduling-config.json")) {
-            List<ScheduleConfig> scheduleConfigList = objectMapper.readValue(inputStream, typeReference);
-            for (ScheduleConfig config : scheduleConfigList) {
-                scheduleConfigMap.put(config.getEventId(), config);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return  scheduleConfigMap;
+        this.scheduleConfigMap = scheduleConfigMap;
     }
 
     public ScheduleConfig getScheduleConfig(String eventId) {

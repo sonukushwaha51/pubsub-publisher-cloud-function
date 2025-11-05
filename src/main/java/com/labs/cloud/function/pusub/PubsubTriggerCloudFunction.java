@@ -1,14 +1,11 @@
 package com.labs.cloud.function.pusub;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.cloud.functions.BackgroundFunction;
 import com.google.cloud.functions.Context;
 import com.google.inject.Guice;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.pubsub.v1.PubsubMessage;
 import com.labs.cloud.function.pusub.configuration.ConfigurationModule;
-import com.labs.cloud.function.pusub.event.Event;
 import com.labs.cloud.function.pusub.properties.PropertiesModule;
 import com.labs.cloud.function.pusub.schedule.SchedulingModule;
 import com.labs.cloud.function.pusub.schedule.SchedulingService;
