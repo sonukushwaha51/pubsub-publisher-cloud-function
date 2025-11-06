@@ -4,7 +4,6 @@ steps:
       - functions
       - deploy
       - pubsub-trigger-function
-      - --no-gen2
       - --region=us-central1
       - --source=.
       - --entry-point=com.labs.cloud.function.pusub.PubsubTriggerCloudFunction
