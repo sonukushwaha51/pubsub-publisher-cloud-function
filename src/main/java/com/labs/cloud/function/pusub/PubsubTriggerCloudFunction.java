@@ -14,6 +14,7 @@ import com.labs.cloud.function.pusub.schedule.SchedulingService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @Slf4j
 public class PubsubTriggerCloudFunction implements BackgroundFunction<PubsubMessage> {
@@ -35,7 +36,7 @@ public class PubsubTriggerCloudFunction implements BackgroundFunction<PubsubMess
     @Override
     public void accept(PubsubMessage pubsubMessage, Context context) throws Exception {
 
-        String eventPayload = pubsubMessage.getData();
+        String eventPayload = new String(Base64.getDecoder().decode(pubsubMessage.getData()), StandardCharsets.UTF_8);
         Event event = objectMapper.readValue(eventPayload, Event.class);
         SchedulingService schedulingService = injector.getInstance(SchedulingService.class);
         log.info("Proceeding with creating cloud task for event: {}", eventPayload);
