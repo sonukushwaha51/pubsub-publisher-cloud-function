@@ -11,7 +11,6 @@ steps:
       - --runtime=java17
       - --trigger-topic=$_TRIGGER_TOPIC
       - --service-account=$_SERVICE_ACCOUNT
-      - --retry
       - --memory=512MB
       - --vpc-connector=vpc-us-central1-connector
       - --egress-settings=all
