@@ -70,7 +70,7 @@ public class SchedulingService {
         String offset = scheduleConfig.getOffset() == null ? "0" : scheduleConfig.getOffset();
         ChronoUnit chronoUnit = scheduleConfig.getTimeUnit() == null ? ChronoUnit.DAYS : ChronoUnit.valueOf(scheduleConfig.getTimeUnit());
         long offsetTime = Long.parseLong(offset) + chronoUnit.getDuration().toMillis();
-        long scheduledTime = zonedDateTime.toEpochSecond() + offsetTime;
+        long scheduledTime = (zonedDateTime.toEpochSecond() + offsetTime) / 1000;
         return Timestamp.newBuilder().setSeconds(scheduledTime).build();
     }
 
