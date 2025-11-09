@@ -68,13 +68,10 @@ public class SchedulingService {
 
     public Timestamp getScheduleTimestamp(ScheduleConfig scheduleConfig) {
         ZonedDateTime zonedDateTime = clock.instant().atZone(clock.getZone());
-        log.info("Current date : {}", zonedDateTime.toEpochSecond());
         String offset = scheduleConfig.getOffset() == null ? "0" : scheduleConfig.getOffset();
         ChronoUnit chronoUnit = scheduleConfig.getTimeUnit() == null ? ChronoUnit.DAYS : scheduleConfig.getTimeUnit();
         long offsetTime = Long.parseLong(offset) * chronoUnit.getDuration().toMillis();
-        log.info("Offset time: {}", offsetTime);
-        long scheduledTime = (zonedDateTime.toEpochSecond() + offsetTime) / 1000;
-        log.info("Scheduling event for time: {}", ZonedDateTime.ofInstant(Instant.ofEpochSecond(scheduledTime), clock.getZone()));
+        long scheduledTime = (zonedDateTime.toInstant().toEpochMilli() + offsetTime) / 1000;
         return Timestamp.newBuilder().setSeconds(scheduledTime).build();
     }
 
