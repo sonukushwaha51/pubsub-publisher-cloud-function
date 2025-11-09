@@ -26,8 +26,8 @@ public class PropertiesModule extends AbstractModule {
 
     @Provides
     @Named("region")
-    public String provideRegion() {
-        return System.getenv("FUNCTION_REGION");
+    public String provideRegion(Properties properties) {
+        return properties.getProperty("region");
     }
 
     @Provides
