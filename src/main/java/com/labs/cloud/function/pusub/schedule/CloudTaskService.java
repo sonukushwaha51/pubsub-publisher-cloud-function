@@ -7,9 +7,11 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Timestamp;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
+@Slf4j
 public class CloudTaskService {
 
     private final ObjectMapper objectMapper;
@@ -40,6 +42,7 @@ public class CloudTaskService {
                            .build())
                            .build();
            cloudTasksClient.createTask(queueName, task);
+           log.info("Cloud task created");
        } catch (IOException e) {
            throw new RuntimeException(e);
        }

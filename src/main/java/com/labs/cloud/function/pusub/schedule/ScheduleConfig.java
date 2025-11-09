@@ -2,6 +2,8 @@ package com.labs.cloud.function.pusub.schedule;
 
 import lombok.Data;
 
+import java.time.temporal.ChronoUnit;
+
 @Data
 public class ScheduleConfig {
 
@@ -9,6 +11,6 @@ public class ScheduleConfig {
 
     private String offset;
 
-    private String timeUnit;
+    private ChronoUnit timeUnit;
 
 }
