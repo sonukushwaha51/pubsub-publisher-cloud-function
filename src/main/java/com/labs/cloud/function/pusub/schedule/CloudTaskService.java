@@ -18,7 +18,7 @@ public class CloudTaskService {
 
     private final String cloudTaskServiceAccount;
 
-    private static final String SCHEDULE_RUNNER_NAME = "pubsub-sched-runner";
+    private static final String SCHEDULE_RUNNER_NAME = "http-publisher-function";
 
     @Inject
     public CloudTaskService(ObjectMapper objectMapper, @Named("cloudTaskServiceAccount") String cloudTaskServiceAccount) {
