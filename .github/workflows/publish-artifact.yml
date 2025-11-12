@@ -34,7 +34,7 @@ jobs:
     - name: Determine artifactory url
       run: |
         branch_name=${GITHUB_REF#ref/heads/}
-        if [[branch_name == 'main']]; then
+        if [[ $branch_name == 'main' ]]; then
           ARTIFACTORY_URL = "https://us-central1-maven.pkg.dev/eighth-saga-474816-a6/releases-local"
         else
           ARTIFACTORY_URL = "https://us-central1-maven.pkg.dev/eighth-saga-474816-a6/snapshots-local"
