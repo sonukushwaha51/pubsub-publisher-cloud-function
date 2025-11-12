@@ -1,5 +1,9 @@
 name: Publish artifact
 
+permissions:
+  contents: read
+  id-token: write
+
 on:
   push:
     branches:
@@ -35,9 +39,9 @@ jobs:
       run: |
         branch_name=${GITHUB_REF#ref/heads/}
         if [[ $branch_name == 'main' ]]; then
-          ARTIFACTORY_URL = "https://us-central1-maven.pkg.dev/eighth-saga-474816-a6/releases-local"
+          ARTIFACTORY_URL="https://us-central1-maven.pkg.dev/eighth-saga-474816-a6/releases-local"
         else
-          ARTIFACTORY_URL = "https://us-central1-maven.pkg.dev/eighth-saga-474816-a6/snapshots-local"
+          ARTIFACTORY_URL="https://us-central1-maven.pkg.dev/eighth-saga-474816-a6/snapshots-local"
         fi        
 
     - name: Extract Maven version
