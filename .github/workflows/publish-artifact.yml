@@ -15,16 +15,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Setup Maven
-      uses: actions/setup-maven@main
-      with:
-        maven-version: 3.9.4
-
     - name: Setup Java
       uses: actions/setup-java@v4
       with:
         java-version: "17"
         distribution: "temurin"
+        cache: maven
 
     - name: Authenticate to GCP
       uses: google-github-actions/auth@v2
