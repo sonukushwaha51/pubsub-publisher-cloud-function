@@ -32,8 +32,7 @@ jobs:
         echo "ARTIFACT_REGISTRY_TOKEN=$(gcloud auth print-access-token)" >> $GITHUB_ENV
 
     - name: Determine artifactory url
-      run:
-        |
+      run: |
         branch_name=${GITHUB_REF#ref/heads/}
         if [[branch_name == 'main']]; then
           ARTIFACTORY_URL = "https://us-central1-maven.pkg.dev/eighth-saga-474816-a6/releases-local"
