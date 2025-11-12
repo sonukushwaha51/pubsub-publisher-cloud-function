@@ -29,7 +29,7 @@ jobs:
 
     - name: Set access token to env
       run: |
-        ARTIFACT_REGISTRY_TOKEN = '$(gcloud auth print-access-token)' >> $GITHUB_ENV
+        echo "ARTIFACT_REGISTRY_TOKEN=$(gcloud auth print-access-token)" >> $GITHUB_ENV
 
     - name: Determine artifactory url
       run:
